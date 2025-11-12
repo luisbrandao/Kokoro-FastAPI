@@ -486,6 +486,12 @@ async def list_models():
         )
 
 
+@router.get("/audio/models")
+async def list_audio_models():
+    """List all available models (audio endpoint alias)"""
+    return await list_models()
+
+
 @router.get("/models/{model}")
 async def retrieve_model(model: str):
     """Retrieve a specific model"""
