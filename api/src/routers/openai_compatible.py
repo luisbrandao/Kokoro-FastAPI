@@ -537,6 +537,7 @@ async def retrieve_model(model: str):
             },
         )
 
+# go?
 @router.get("/audio/models")
 async def list_audio_models():
     """List all available models (audio endpoint alias)"""
