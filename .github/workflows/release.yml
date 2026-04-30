@@ -53,7 +53,7 @@ jobs:
       BUILDKIT_STEP_LOG_MAX_SIZE: 10485760
       VERSION: ${{ needs.prepare-release.outputs.version_tag }}
       REGISTRY: ${{ vars.REGISTRY || 'ghcr.io' }}
-      OWNER: ${{ vars.OWNER || 'remsky' }}
+      OWNER: ${{ vars.OWNER || github.repository_owner }}
       REPO: ${{ vars.REPO || 'kokoro-fastapi' }}
     runs-on: ubuntu-latest
     steps:
@@ -73,16 +73,6 @@ jobs:
           else
             echo "Tag $TAG_NAME does not exist. Proceeding with release."
           fi
-
-      - name: Free disk space
-        run: |
-          echo "Listing current disk space"
-          df -h
-          echo "Cleaning up disk space..."
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
-          docker system prune -af
-          echo "Disk space after cleanup"
-          df -h
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3 # Use v3
@@ -116,7 +106,7 @@ jobs:
       packages: write
     env:
       REGISTRY: ${{ vars.REGISTRY || 'ghcr.io' }}
-      OWNER: ${{ vars.OWNER || 'remsky' }}
+      OWNER: ${{ vars.OWNER || github.repository_owner }}
       REPO: ${{ vars.REPO || 'kokoro-fastapi' }}
     steps:
       - name: Log in to GitHub Container Registry
