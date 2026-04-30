@@ -407,6 +407,13 @@ def test_list_voices(mock_tts_service):
     assert "voice2" in data["voices"]
 
 
+def test_list_audio_models():
+    """Test listing available audio models"""
+    response = client.get("/v1/audio/models")
+    assert response.status_code == 200
+    assert response.json() == {"models": ["kokoro"]}
+
+
 @patch("api.src.routers.openai_compatible.settings")
 def test_combine_voices(mock_settings, mock_tts_service):
     """Test combining voices endpoint"""

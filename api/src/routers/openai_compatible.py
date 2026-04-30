@@ -558,6 +558,12 @@ async def list_voices():
         )
 
 
+@router.get("/audio/models")
+async def list_audio_models():
+    """List available audio models."""
+    return {"models": ["kokoro"]}
+
+
 @router.post("/audio/voices/combine")
 async def combine_voices(request: Union[str, List[str]]):
     """Combine multiple voices into a new voice and return the .pt file.
